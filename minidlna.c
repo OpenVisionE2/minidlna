@@ -756,6 +756,10 @@ init(int argc, char **argv)
 			if (strtobool(ary_options[i].value))
 				SETFLAG(NO_EXTRACT_NAMES_MASK);
 			break;
+		case ENABLE_NFO_FILES:
+			if (strtobool(ary_options[i].value))
+				SETFLAG(USE_NFO_MASK);
+			break;			
 		case ROOT_CONTAINER:
 			switch (ary_options[i].value[0]) {
 			case '.':

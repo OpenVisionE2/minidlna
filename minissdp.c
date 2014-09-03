@@ -127,6 +127,7 @@ OpenAndConfSSDPReceiveSocket(void)
 	 * unsolicited NOTIFY packets from the real interface address. */
 	sockname.sin_addr.s_addr = htonl(INADDR_ANY);
 #endif
+
 	if (bind(s, (struct sockaddr *)&sockname, sizeof(struct sockaddr_in)) < 0)
 	{
 		DPRINTF(E_ERROR, L_SSDP, "bind(udp): %s\n", strerror(errno));

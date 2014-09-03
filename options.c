@@ -61,6 +61,7 @@ static const struct {
 	{ UPNPMINISSDPDSOCKET, "minissdpdsocket"},
 	{ ENABLE_TIVO, "enable_tivo" },
 	{ ENABLE_DLNA_STRICT, "strict_dlna" },
+	{ ENABLE_NFO_FILES, "use_nfo_files" },
 	{ ROOT_CONTAINER, "root_container" },
 	{ USER_ACCOUNT, "user" },
 	{ FORCE_SORT_CRITERIA, "force_sort_criteria" },

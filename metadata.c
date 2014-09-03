@@ -1512,13 +1512,16 @@ video_no_dlna:
 	}
 #endif
 
-	strcpy(nfo, path);
-	ext = strrchr(nfo, '.');
-	if( ext )
+	if (GETFLAG(USE_NFO_MASK))
 	{
-		strcpy(ext+1, "nfo");
-		if( access(nfo, R_OK) == 0 )
-			parse_nfo(nfo, &m);
+		strcpy(nfo, path);
+		ext = strrchr(nfo, '.');
+		if( ext )
+		{
+			strcpy(ext+1, "nfo");
+			if( access(nfo, F_OK) == 0 )
+				parse_nfo(nfo, &m);
+		}
 	}
 
 	if( !m.mime )
