@@ -423,7 +423,8 @@ is_audio(const char * file)
 int
 is_image(const char * file)
 {
-	return (ends_with(file, ".jpg") || ends_with(file, ".jpeg"));
+	return (ends_with(file, ".jpg") || ends_with(file, ".jpeg") ||
+		ends_with(file, ".mpo"));
 }
 
 int
@@ -435,7 +436,8 @@ is_playlist(const char * file)
 int
 is_caption(const char * file)
 {
-	return (ends_with(file, ".srt") || ends_with(file, ".smi"));
+	return (ends_with(file, ".srt") || ends_with(file, ".smi") ||
+		ends_with(file, ".sub") || ends_with(file, ".ssa"));
 }
 
 media_types
