@@ -55,7 +55,8 @@
 
 /* SSDP ip/port */
 #define SSDP_PORT (1900)
-#define SSDP_MCAST_ADDR ("239.255.255.250")
+
+char ssdp_address[SSDP_ADDRESS_MAX_LEN];
 
 static int
 AddMulticastMembership(int s, struct lan_addr_s *iface)
@@ -65,13 +66,13 @@ AddMulticastMembership(int s, struct lan_addr_s *iface)
 	struct ip_mreqn imr;	/* Ip multicast membership */
 	/* setting up imr structure */
 	memset(&imr, '\0', sizeof(imr));
-	imr.imr_multiaddr.s_addr = inet_addr(SSDP_MCAST_ADDR);
+	imr.imr_multiaddr.s_addr = inet_addr(ssdp_address);
 	imr.imr_ifindex = iface->ifindex;
 #else
 	struct ip_mreq imr;	/* Ip multicast membership */
 	/* setting up imr structure */
 	memset(&imr, '\0', sizeof(imr));
-	imr.imr_multiaddr.s_addr = inet_addr(SSDP_MCAST_ADDR);
+	imr.imr_multiaddr.s_addr = inet_addr(ssdp_address);
 	imr.imr_interface.s_addr = iface->addr.s_addr;
 #endif
 	/* Setting the socket options will guarantee, tha we will only receive
@@ -119,14 +120,13 @@ OpenAndConfSSDPReceiveSocket(void)
 	 * to receive datagramms send to this multicast address.
 	 * To specify the local nics we want to use we have to use setsockopt,
 	 * see AddMulticastMembership(...). */
-	sockname.sin_addr.s_addr = inet_addr(SSDP_MCAST_ADDR);
+	sockname.sin_addr.s_addr = inet_addr(ssdp_address);
 #else
 	/* NOTE: Binding to SSDP_MCAST_ADDR on Darwin & *BSD causes NOTIFY replies are
 	 * sent from SSDP_MCAST_ADDR what forces some clients to ignore subsequent
 	 * unsolicited NOTIFY packets from the real interface address. */
 	sockname.sin_addr.s_addr = htonl(INADDR_ANY);
 #endif
-
 	if (bind(s, (struct sockaddr *)&sockname, sizeof(struct sockaddr_in)) < 0)
 	{
 		DPRINTF(E_ERROR, L_SSDP, "bind(udp): %s\n", strerror(errno));
@@ -274,7 +274,7 @@ SendSSDPNotifies(int s, const char *host, unsigned short port,
 	memset(&sockname, 0, sizeof(struct sockaddr_in));
 	sockname.sin_family = AF_INET;
 	sockname.sin_port = htons(SSDP_PORT);
-	sockname.sin_addr.s_addr = inet_addr(SSDP_MCAST_ADDR);
+	sockname.sin_addr.s_addr = inet_addr(ssdp_address);
 	lifetime = (interval << 1) + 10;
 
 	for (dup = 0; dup < 2; dup++)
@@ -294,7 +294,7 @@ SendSSDPNotifies(int s, const char *host, unsigned short port,
 					"USN:%s%s%s%s\r\n"
 					"NTS:ssdp:alive\r\n"
 					"\r\n",
-					SSDP_MCAST_ADDR, SSDP_PORT,
+					ssdp_address, SSDP_PORT,
 					lifetime,
 					host, port,
 					known_service_types[i],
@@ -780,7 +780,7 @@ SendSSDPGoodbyes(int s)
 	memset(&sockname, 0, sizeof(struct sockaddr_in));
 	sockname.sin_family = AF_INET;
 	sockname.sin_port = htons(SSDP_PORT);
-	sockname.sin_addr.s_addr = inet_addr(SSDP_MCAST_ADDR);
+	sockname.sin_addr.s_addr = inet_addr(ssdp_address);
 
 	for (dup = 0; dup < 2; dup++)
 	{
@@ -793,7 +793,7 @@ SendSSDPGoodbyes(int s)
 					"USN:%s%s%s%s\r\n"
 					"NTS:ssdp:byebye\r\n"
 					"\r\n",
-					SSDP_MCAST_ADDR, SSDP_PORT,
+					ssdp_address, SSDP_PORT,
 					known_service_types[i],
 					(i > 1 ? "1" : ""), uuidvalue,
 					(i > 0 ? "::" : ""),

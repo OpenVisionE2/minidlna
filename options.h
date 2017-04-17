@@ -64,6 +64,7 @@ enum upnpconfigoptions {
 	ENABLE_SUBTITLES,		/* Enable generic subtitle support for all clients by default */
 	DISPLAY_VIDEO_ART,		/* show video thumbnails */
 	FILE_NAMES,			/* don't extract title from file's metadata */
+	SSDPADDRESS			/* SSDP Multicast address. */
 };
 
 /* readoptionsfile()

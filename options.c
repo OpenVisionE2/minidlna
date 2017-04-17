@@ -71,6 +71,7 @@ static const struct {
 	{ ENABLE_SUBTITLES, "enable_subtitles" },
 	{ DISPLAY_VIDEO_ART, "video_thumbnails" },
 	{ FILE_NAMES, "only_file_names" },
+	{ SSDPADDRESS, "ssdp_address" }
 };
 
 int

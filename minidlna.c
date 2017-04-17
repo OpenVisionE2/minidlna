@@ -587,6 +587,8 @@ init(int argc, char **argv)
 	runtime_vars.root_container = NULL;
 	runtime_vars.ifaces[0] = NULL;
 
+	strcpy(ssdp_address, "239.255.255.250");
+
 	/* read options file first since
 	 * command line arguments have final say */
 	if (readoptionsfile(optionsfile) < 0)
@@ -827,6 +829,8 @@ init(int argc, char **argv)
 		case ENABLE_SUBTITLES:
 			if (!strtobool(ary_options[i].value))
 				CLEARFLAG(SUBTITLES_MASK);
+		case SSDPADDRESS:
+			strncpyt(ssdp_address, ary_options[i].value, SSDP_ADDRESS_MAX_LEN);
 			break;
 		default:
 			DPRINTF(E_ERROR, L_GENERAL, "Unknown option in file %s\n",

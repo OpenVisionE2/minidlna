@@ -41,4 +41,7 @@ int SendSSDPGoodbyes(int s);
 
 int SubmitServicesToMiniSSDPD(const char *host, unsigned short port);
 
+#define SSDP_ADDRESS_MAX_LEN 40
+extern char ssdp_address[];
+
 #endif
