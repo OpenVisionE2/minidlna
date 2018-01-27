@@ -723,6 +723,16 @@ init(int argc, char **argv)
 		case UPNPLOGLEVEL:
 			log_level = ary_options[i].value;
 			break;
+		case UPNPICONDIR:
+			path = realpath(ary_options[i].value, buf);
+			if (!path || access(path, F_OK) != 0)
+			{
+				DPRINTF(E_ERROR, L_GENERAL, "Icon directory \"%s\" not accessible [%s]\n",
+					ary_options[i].value, strerror(errno));
+				break;
+			}
+			strncpyt(icon_path, path, sizeof(icon_path));
+			break;
 		case UPNPINOTIFY:
 			if (!strtobool(ary_options[i].value))
 				CLEARFLAG(INOTIFY_MASK);

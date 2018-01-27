@@ -122,6 +122,11 @@ Example
 log_level=general,artwork,database,inotify,scanner,metadata,http,ssdp,tivo=warn
 .fi
 
+.IP "\fBicon_dir\fP"
+Where minidlna looks for icon files. The files should me named sm.png and
+sm.jpg for small icons (48x48) and lrg.png and lrg.jpg for large icons
+(120x120). By default built-in icons are sent to the DLNA clients.
+
 .IP "\fBinotify\fP"
 Set to 'yes' to enable inotify monitoring of the files under media_dir 
 to automatically discover new files. Set to 'no' to disable inotify.

@@ -1387,8 +1387,9 @@ SendResp_icon(struct upnphttp * h, char * icon)
 	char header[512];
 	char mime[12] = "image/";
 	char *data;
-	int size;
+	off_t size;
 	struct string_s str;
+	int fd = -1;
 
 	if( strcmp(icon, "sm.png") == 0 )
 	{
@@ -1425,16 +1426,48 @@ SendResp_icon(struct upnphttp * h, char * icon)
 		return;
 	}
 
+	// try the icon path only after the default icon, so invalid filenames
+	// are ignored and mime is already good
+	if( icon_path[0] )
+	{
+		size_t path_len;
+		char *path;
+
+		path_len = strlen(icon_path) + 1 + strlen(icon) + 1;
+		path = malloc(path_len);
+		snprintf(path, path_len, "%s/%s", icon_path, icon);
+
+		fd = _open_file(path);
+		free(path);
+		if (fd == -403)
+		{
+			Send403(h);
+			return;
+		}
+		else if (fd >= 0)
+		{
+			size = lseek(fd, 0, SEEK_END);
+			lseek(fd, 0, SEEK_SET);
+		}
+	}
+
 	INIT_STR(str, header);
 
 	start_dlna_header(&str, 200, "Interactive", mime);
-	strcatf(&str, "Content-Length: %d\r\n\r\n", size);
+	strcatf(&str, "Content-Length: %jd\r\n\r\n", (intmax_t)size);
 
 	if( send_data(h, str.data, str.off, MSG_MORE) == 0 )
 	{
 		if( h->req_command != EHead )
-			send_data(h, data, size, 0);
+		{
+			if( fd >= 0 )
+				send_file(h, fd, 0, size-1);
+			else
+				send_data(h, data, size, 0);
+		}
 	}
+	if( fd >= 0 )
+		close(fd);
 	CloseSocket_upnphttp(h);
 }
 

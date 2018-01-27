@@ -50,6 +50,7 @@ enum upnpconfigoptions {
 	UPNPDBDIR,			/* base directory to store the database and album art cache */
 	UPNPLOGDIR,			/* base directory to store the log file */
 	UPNPLOGLEVEL,			/* logging verbosity */
+	UPNPICONDIR,			/* specify where to look for icons */
 	UPNPMINISSDPDSOCKET,		/* minissdpdsocket */
 	ENABLE_TIVO,			/* enable support for streaming images and music to TiVo */
 	ENABLE_DLNA_STRICT,		/* strictly adhere to DLNA specs */
