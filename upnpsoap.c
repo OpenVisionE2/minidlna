@@ -1177,6 +1177,8 @@ callback(void *args, int argc, char **argv, char **azColName)
 				}
 			}
 		}
+		if( *mime == 'v' && GETFLAG(NO_VIDEO_ART_MASK) )
+			album_art = 0;
 		if( NON_ZERO(album_art) )
 		{
 			/* Video and audio album art is handled differently */

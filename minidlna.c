@@ -735,6 +735,14 @@ init(int argc, char **argv)
 			if (strtobool(ary_options[i].value))
 				SETFLAG(DLNA_STRICT_MASK);
 			break;
+		case DISPLAY_VIDEO_ART:
+			if (!strtobool(ary_options[i].value))
+				SETFLAG(NO_VIDEO_ART_MASK);
+			break;
+		case FILE_NAMES:
+			if (strtobool(ary_options[i].value))
+				SETFLAG(NO_EXTRACT_NAMES_MASK);
+			break;
 		case ROOT_CONTAINER:
 			switch (ary_options[i].value[0]) {
 			case '.':

@@ -1549,7 +1549,7 @@ video_no_dlna:
 		strftime(m.date, 20, "%FT%T", modtime);
 	}
 
-	if( !m.title )
+	if( !m.title || GETFLAG(NO_EXTRACT_NAMES_MASK) )
 	{
 		m.title = strdup(name);
 		strip_ext(m.title);
