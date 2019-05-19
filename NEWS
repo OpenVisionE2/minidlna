@@ -7,7 +7,8 @@
 - Added new -I option to respond to nonlocal queries.
 - Added MPO and more subtitle files.
 - Added Hungarian translation.
-
+- Added ENABLE_NFO_FILES switch.
+- Fixed and extended HTTP 'Range:' parsing.
 
 1.2.1 - Released 24-Aug-2017
 --------------------------------
