@@ -1,3 +1,14 @@
+1.2.2 - Released 20-May-2019
+--------------------------------
+- Added option to ignore file's metadata name and to not send video file's artwork.
+- Added option to have icon_dir config.
+- Fixed warning when cached album already exists.
+- Added option to specify SSDP Multicast address.
+- Added new -I option to respond to nonlocal queries.
+- Added MPO and more subtitle files.
+- Added Hungarian translation.
+
+
 1.2.1 - Released 24-Aug-2017
 --------------------------------
 - Added Movian client detection and subtitle support.
