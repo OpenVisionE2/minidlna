@@ -1,7 +1,7 @@
 /* Reusable SQLite3 wrapper functions
  *
  * Project : minidlna
- * Website : http://sourceforge.net/projects/minidlna/
+ * Website : https://github.com/OpenVisionE2/minidlna
  * Author  : Justin Maggard
  *
  * MiniDLNA media server

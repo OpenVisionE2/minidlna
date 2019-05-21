@@ -1,5 +1,5 @@
 /* MiniDLNA project
- * http://minidlna.sourceforge.net/
+ * https://github.com/OpenVisionE2/minidlna
  *
  * MiniDLNA media server
  * Copyright (C) 2008-2009  Justin Maggard

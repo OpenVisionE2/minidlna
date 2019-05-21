@@ -39,7 +39,7 @@ AC_PROG_LN_S
 AC_PROG_MAKE_SET
 
 # Default string definitions
-AC_DEFINE_UNQUOTED([OS_URL],"http://sourceforge.net/projects/minidlna/",[OS URL])
+AC_DEFINE_UNQUOTED([OS_URL],"https://github.com/OpenVisionE2/minidlna",[OS URL])
 AC_DEFINE_UNQUOTED([ROOTDEV_MANUFACTURER],"Justin Maggard", [Manufacturer])
 AC_DEFINE_UNQUOTED([ROOTDEV_MANUFACTURERURL],"http://www.netgear.com/", [Manufacturer URL])
 AC_DEFINE_UNQUOTED([ROOTDEV_MODELNAME],"Windows Media Connect compatible (MiniDLNA)", [Model name])

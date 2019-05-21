@@ -1,6 +1,6 @@
 /* MiniDLNA project
  *
- * http://sourceforge.net/projects/minidlna/
+ * https://github.com/OpenVisionE2/minidlna
  *
  * Much of this code and ideas for this code have been taken
  * from Helge Deller's proposed Linux kernel patch (which

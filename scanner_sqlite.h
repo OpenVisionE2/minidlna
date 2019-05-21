@@ -1,7 +1,7 @@
 /* Media table definitions for SQLite database
  *
  * Project : minidlna
- * Website : http://sourceforge.net/projects/minidlna/
+ * Website : https://github.com/OpenVisionE2/minidlna
  * Author  : Douglas Carmichael
  *
  * MiniDLNA media server
