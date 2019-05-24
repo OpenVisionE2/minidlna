@@ -1,16 +1,21 @@
+#!/bin/sh
 ### BEGIN INIT INFO
-# Provides:				readymedia
+# Provides:				minidlna
 # Required-Start:		$networking
 # Required-Stop:
-# Default-Start:
-# Default-Stop:			0 1 2 3 4 5 6
-# Short-Description:	dlna server, formerly known as minidlna
+# Default-Start:        2 3 4 5
+# Default-Stop:			0 1 6
+# Short-Description:	DLNA/UPnP-AV media server
 ### END INIT INFO
+
+# This service script is used in Enigma2 based set-top boxes (STB).
+# Note that the default Start/Stop runlevels above isn't always used.
+# This script is for example executed from the OpenPLi DLNAServer plugin.
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=/usr/sbin/minidlnad
-NAME=readymedia
-DESC=readymedia
+NAME=MiniDLNA
+DESC=DLNA-Server
 
 test -x "$DAEMON" || exit 0
 
