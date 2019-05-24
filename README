@@ -1,7 +1,11 @@
 MiniDLNA project
+
+2019 OpenVisionE2
+webpage: https://github.com/OpenVisionE2/minidlna
+
 (c) 2009 Justin Maggard
 Portions (c) 2006-2007 Thomas Bernard
-webpage: https://github.com/OpenVisionE2/minidlna
+webpage: http://sourceforge.net/projects/minidlna/
 
 This directory contains the MiniDLNA daemon software.
 This software is subject to the conditions detailed in
@@ -28,6 +32,3 @@ Prerequisites
 - libvorbis
 - libsqlite3
 - libavformat (the ffmpeg libraries)
-
-
-Justin Maggard
