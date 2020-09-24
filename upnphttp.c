@@ -722,7 +722,7 @@ ProcessHTTPPOST_upnphttp(struct upnphttp * h)
 static int
 check_event(struct upnphttp *h)
 {
-	enum event_type type;
+	enum event_type type = E_INVALID;
 
 	if (h->req_Callback)
 	{
@@ -730,7 +730,6 @@ check_event(struct upnphttp *h)
 		{
 			BuildResp2_upnphttp(h, 400, "Bad Request",
 				            "<html><body>Bad request</body></html>", 37);
-			type = E_INVALID;
 		}
 		else if (strncmp(h->req_Callback, "http://", 7) != 0 ||
 		         strncmp(h->req_NT, "upnp:event", h->req_NTLen) != 0)
@@ -739,10 +738,30 @@ check_event(struct upnphttp *h)
 			 * If CALLBACK header is missing or does not contain a valid HTTP URL,
 			 * the publisher must respond with HTTP error 412 Precondition Failed*/
 			BuildResp2_upnphttp(h, 412, "Precondition Failed", 0, 0);
-			type = E_INVALID;
 		}
 		else
-			type = E_SUBSCRIBE;
+		{
+			/* Make sure callback URL points to the originating IP */
+			struct in_addr addr;
+			char addrstr[16];
+			int i = 0;
+			const char *p = h->req_Callback + 7;
+			while (!strchr("/:>", *p) && i < sizeof(addrstr) - 1 &&
+			       p < (h->req_Callback + h->req_CallbackLen))
+			{
+				addrstr[i++] = *(p++);
+			}
+			addrstr[i] = '\0';
+
+			if (inet_pton(AF_INET, addrstr, &addr) <= 0 ||
+			    memcmp(&addr, &h->clientaddr, sizeof(struct in_addr)))
+			{
+				DPRINTF(E_ERROR, L_HTTP, "Bad callback IP (%s)\n", addrstr);
+				BuildResp2_upnphttp(h, 412, "Precondition Failed", 0, 0);
+			}
+			else
+				type = E_SUBSCRIBE;
+		}
 	}
 	else if (h->req_SID)
 	{
@@ -751,7 +770,6 @@ check_event(struct upnphttp *h)
 		{
 			BuildResp2_upnphttp(h, 400, "Bad Request",
 				            "<html><body>Bad request</body></html>", 37);
-			type = E_INVALID;
 		}
 		else
 			type = E_RENEW;
@@ -759,7 +777,6 @@ check_event(struct upnphttp *h)
 	else
 	{
 		BuildResp2_upnphttp(h, 412, "Precondition Failed", 0, 0);
-		type = E_INVALID;
 	}
 
 	return type;
