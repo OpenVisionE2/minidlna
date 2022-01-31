@@ -901,7 +901,7 @@ start_scanner(void)
 		DPRINTF(E_WARN, L_INOTIFY,  "Failed to reduce scanner thread priority\n");
 
 	setlocale(LC_COLLATE, "");
-	av_register_all();
+	avformat_network_init();
 	av_log_set_level(AV_LOG_PANIC);
 
 	if( GETFLAG(RESCAN_MASK) )
