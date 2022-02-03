@@ -14,7 +14,7 @@
 # License along with MiniDLNA; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
 # USA.
-AC_INIT(MiniDLNA,1.2.2,,minidlna)
+AC_INIT(MiniDLNA,1.3.0,,minidlna)
 #LT_INIT
 
 AC_CANONICAL_TARGET
@@ -28,7 +28,7 @@ m4_ifdef([AC_USE_SYSTEM_EXTENSIONS], [AC_USE_SYSTEM_EXTENSIONS])
 
 AM_ICONV
 AM_GNU_GETTEXT([external])
-AM_GNU_GETTEXT_VERSION(0.18)
+AM_GNU_GETTEXT_VERSION(0.20)
 
 # Checks for programs.
 AC_PROG_AWK
@@ -127,6 +127,10 @@ case $host in
 esac
 
 AC_CHECK_HEADERS(syscall.h sys/syscall.h mach/mach_time.h)
+
+AC_MSG_CHECKING([for clock_gettime])
+AC_SEARCH_LIBS([clock_gettime], [rt], [AC_DEFINE([HAVE_CLOCK_GETTIME], [1], [use clock_gettime])],)
+
 AC_MSG_CHECKING([for __NR_clock_gettime syscall])
 AC_COMPILE_IFELSE(
     [AC_LANG_PROGRAM(
@@ -414,7 +418,6 @@ for dir in "" /usr/local $SEARCH_DIR; do
     AC_CHECK_LIB([id3tag -lz], [id3_file_open], [LIBID3TAG_LIBS="-lid3tag -lz"], [unset ac_cv_lib_id3tag_id3_file_open; LDFLAGS="$LDFLAGS_SAVE"; continue])
     break
 done
-test x"$ac_cv_lib_id3tag__lz___id3_file_open" = x"yes" || AC_MSG_ERROR([Could not find libid3tag])
 AC_SUBST(LIBID3TAG_LIBS)
 
 LDFLAGS_SAVE="$LDFLAGS"
@@ -440,10 +443,6 @@ for dir in "" /usr/local $SEARCH_DIR; do
 		  [unset ac_cv_lib_avformat_av_open_input_file; unset ac_cv_lib_avformat_avformat_open_input; LDFLAGS="$LDFLAGS_SAVE"; continue])])
     break
 done
-if test x"$ac_cv_lib_avformat__lavcodec__lavutil__lz___av_open_input_file" != x"yes" &&
-   test x"$ac_cv_lib_avformat__lavcodec__lavutil__lz___avformat_open_input" != x"yes"; then
-   AC_MSG_ERROR([Could not find libavformat - part of ffmpeg])
-fi
 AC_SUBST(LIBAVFORMAT_LIBS)
 
 AC_CHECK_LIB(pthread, pthread_create)
